@@ -1,0 +1,3 @@
+Main API routes
+ 1. GET - Redirection
+ 2. POST - Create short url

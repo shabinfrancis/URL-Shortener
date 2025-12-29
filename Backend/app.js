@@ -7,6 +7,7 @@ import express from "express"
 import { nanoid } from "nanoid";
 import connectToDb from './config/mongo.config.js';
 import shortUrlSchema from './models/shorturl.model.js';
+import userRoutes from './routes/user.route.js'
 
 connectToDb();
 
@@ -19,6 +20,8 @@ app.use(cookieParser());
 app.get('/', (req, res) => {
     res.send("hello")
 })
+
+app.use('/users', userRoutes);
 
 app.get('/redirect/:id', async (req, res) => {
     const {id} = req.params;
