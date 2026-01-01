@@ -8,6 +8,7 @@ import { nanoid } from "nanoid";
 import connectToDb from './config/mongo.config.js';
 import shortUrlSchema from './models/shorturl.model.js';
 import userRoutes from './routes/user.route.js'
+import shorturlRoutes from './routes/shorturl.route.js'
 
 connectToDb();
 
@@ -33,16 +34,7 @@ app.get('/redirect/:id', async (req, res) => {
     }
 })
 
-app.post('/create-url', (req, res) => {
-    const {url} = req.body;
-    const shortUrl = nanoid(7);
-    const newUrl = new shortUrlSchema({
-        full_url: url,
-        short_url:shortUrl
-    })
-    newUrl.save()
-    res.send(nanoid(7))
-})
+app.post('/api', shorturlRoutes);
 
 app.listen(8085, () => {
     console.log("Server listening to port 8085")
