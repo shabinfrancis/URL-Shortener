@@ -4,11 +4,13 @@ dotenv.config();
 import cookieParser from "cookie-parser";
 import cors from 'cors'
 import express from "express"
-import { nanoid } from "nanoid";
+// import { nanoid } from "nanoid";
 import connectToDb from './config/mongo.config.js';
-import shortUrlSchema from './models/shorturl.model.js';
+// import shortUrlSchema from './models/shorturl.model.js';
 import userRoutes from './routes/user.route.js'
 import shorturlRoutes from './routes/shorturl.route.js'
+import { redirectFromShortUrl } from "./controllers/shorturl.controller.js";
+import { errorHandler } from "./utils/errorHandler.js";
 
 connectToDb();
 
@@ -23,18 +25,10 @@ app.get('/', (req, res) => {
 })
 
 app.use('/users', userRoutes);
+app.use('/api', shorturlRoutes);
+app.use('/:id', redirectFromShortUrl);
 
-app.get('/redirect/:id', async (req, res) => {
-    const {id} = req.params;
-    const url = await shortUrlSchema.findOne({short_url: id});
-    if(url) {
-        res.redirect(url.full_url);
-    } else {
-        res.status(404).send("Not found.")
-    }
-})
-
-app.post('/api', shorturlRoutes);
+app.use(errorHandler);
 
 app.listen(8085, () => {
     console.log("Server listening to port 8085")
