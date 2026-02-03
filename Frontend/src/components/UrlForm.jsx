@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import { QueryClient } from '@tanstack/react-query'
+import { queryClient } from '../main'
 
 const UrlForm = () => {
   
