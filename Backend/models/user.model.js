@@ -23,8 +23,24 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
         select: false,
+    },
+    avatar: {
+        type: String,
+        required: false,
+        default: function() {
+            return getGravatarUrl(this.email);
+        },
     }
-})
+});
+
+function getGravatarUrl(email) {
+    const hash = require('crypto')
+      .createHash('md5')
+      .update(email.trim().toLowerCase())
+      .digest('hex');
+
+    return `https://www.gravatar.com/avatar/${hash}?d=mp`;
+}
 
 const userModel = mongoose.model('user', userSchema);
 export default userModel;

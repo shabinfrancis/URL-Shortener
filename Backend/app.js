@@ -9,6 +9,7 @@ import connectToDb from './config/mongo.config.js';
 // import shortUrlSchema from './models/shorturl.model.js';
 import userRoutes from './routes/user.route.js'
 import shorturlRoutes from './routes/shorturl.route.js'
+import authRoutes from './routes/auth.route.js'
 import { redirectFromShortUrl } from "./controllers/shorturl.controller.js";
 import { errorHandler } from "./utils/errorHandler.js";
 
@@ -25,6 +26,7 @@ app.get('/', (req, res) => {
 })
 
 app.use('/users', userRoutes);
+app.use('/api/auth', authRoutes);
 app.use('/api', shorturlRoutes);
 app.use('/:id', redirectFromShortUrl);
 

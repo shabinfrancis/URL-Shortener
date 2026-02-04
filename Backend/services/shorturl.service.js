@@ -1,4 +1,4 @@
-import { generateNanoid } from "../utils/generateNanoid.js"
+import { generateNanoid } from "../utils/helper.js"
 // import shortUrl from "../models/shorturl.model.js"
 import { saveShortUrl } from "../dao/shorturl.js"
 
