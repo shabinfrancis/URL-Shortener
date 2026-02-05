@@ -1,4 +1,5 @@
 import { createUser, findUserByEmail, findUserByEmailByPassword } from "../dao/user.dao.js"
+import userModel from "../models/user.model.js"
 import { ConflictError } from "../utils/errorHandler.js"
 import {signToken} from "../utils/helper.js"
 

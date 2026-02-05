@@ -1,17 +1,10 @@
 import mongoose from "mongoose";
+import bcrypt from "bcrypt";
 
 const userSchema = new mongoose.Schema({
-    fullname: {
-        firstname: {
-            type: String,
-            required: true,
-            minLength: [3, 'First name must be at least 3 characters long.']
-        },
-        lastname: {
-            type: String,
-            required: true,
-            minLength: [3, 'Last name must be at least 3 characters long.']
-        }
+    name: {
+        type: String,
+        required: true,
     },
     email: {
         type: String,
@@ -27,20 +20,27 @@ const userSchema = new mongoose.Schema({
     avatar: {
         type: String,
         required: false,
-        default: function() {
-            return getGravatarUrl(this.email);
-        },
+        default: "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp",
     }
 });
 
-function getGravatarUrl(email) {
-    const hash = require('crypto')
-      .createHash('md5')
-      .update(email.trim().toLowerCase())
-      .digest('hex');
+userSchema.methods.comparePassword = async function (password) {
+  return await bcrypt.compare(password, this.password);
+};
 
-    return `https://www.gravatar.com/avatar/${hash}?d=mp`;
-}
+// userSchema.set('toJSON', {
+//   transform: function (doc, ret) {
+//     delete ret.password;
+//     delete ret.__v;
+//     return ret;
+//   }
+// });
+
+// userSchema.pre("save", async function (next) {
+//   if (!this.isModified("password")) return next();
+//   this.password = await bcrypt.hash(this.password, 10);
+//   next();
+// });
 
 const userModel = mongoose.model('user', userSchema);
 export default userModel;

@@ -13,8 +13,8 @@ export const findUserById = async (id) => {
     return await User.findById(id)
 }
 
-export const createUser = async (fullname, email, password) => {
-    const newUser = new User({fullname, email, password})
+export const createUser = async (name, email, password) => {
+    const newUser = new User({name, email, password})
     await newUser.save()
     return newUser;
 }
