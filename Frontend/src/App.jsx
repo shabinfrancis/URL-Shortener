@@ -1,12 +1,9 @@
-import React from 'react'
-import HomePage from './pages/HomePage'
+import React from 'react';
+import { RouterProvider } from '@tanstack/react-router';
+import { router } from './main';
 
 const App = () => {
-  return (
-    <>
-      <HomePage />
-    </>
-  )
-}
+  return <RouterProvider router={router} />;
+};
 
-export default App
+export default App;
