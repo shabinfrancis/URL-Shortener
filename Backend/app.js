@@ -12,6 +12,7 @@ import shorturlRoutes from './routes/shorturl.route.js'
 import authRoutes from './routes/auth.route.js'
 import { redirectFromShortUrl } from "./controllers/shorturl.controller.js";
 import { errorHandler } from "./utils/errorHandler.js";
+import { attachUser } from "./utils/attachUser.js";
 
 connectToDb();
 
@@ -20,6 +21,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+app.use(attachUser);
 
 app.get('/', (req, res) => {
     res.send("hello")
